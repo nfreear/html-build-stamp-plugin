@@ -21,11 +21,6 @@ const schema = {
   additionalProperties: false
 };
 
-/* const COMMIT_SHA = process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(0, 8) : '[local]';
-const BUILD_REGEX = /(<meta name="anf.build" content=")\w*(">)/;
-const COMMIT_REGEX = /(<meta name="anf.commit" content=")\w*(">)/;
-*/
-
 class HtmlBuildStampPlugin {
   get buildRegex () { return /(<meta name="wpb.build" content=")\w*(">)/; }
 
@@ -36,16 +31,15 @@ class HtmlBuildStampPlugin {
   }
 
   constructor (options = {}) {
-    const RES = validate(schema, options, {
+    validate(schema, options, {
       name: 'HtmlBuildStampPlugin',
-      baseDataPath: 'options',
+      baseDataPath: 'options'
     });
     this._options = options;
-    // console.log('BuildStampHtmlPlugin. OPT:', RES, this._options);
   }
 
   // Define `apply` as its prototype method which is supplied with compiler as its argument
-  apply(compiler) {
+  apply (compiler) {
     // Specify the event hook to attach to
     compiler.hooks.emit.tapAsync(
       'HtmlBuildStampPlugin',
@@ -54,15 +48,7 @@ class HtmlBuildStampPlugin {
 
         const { inputFile, outputFile } = this._options;
 
-        await this.processHtmlFile(inputFile, outputFile)
-
-        /* console.log(
-          'Here’s the `compilation` object which represents a single build of assets:',
-          compilation
-        ); */
-
-        // Manipulate the build using the plugin API provided by webpack
-        // compilation.addModule(/* ... */);
+        await this.processHtmlFile(inputFile, outputFile);
 
         callback();
       }
@@ -72,8 +58,8 @@ class HtmlBuildStampPlugin {
   async processHtmlFile (inputFilePath, outputFilePath) {
     const HTML = await fs.readFile(inputFilePath, 'utf8');
 
-    console.assert(this.buildRegex.test(HTML), 'buildRegex - Not found.');
-    console.assert(this.commitRegex.test(HTML), 'commitRegex - Not found.');
+    console.assert(this.buildRegex.test(HTML), 'buildRegex - No match.');
+    console.assert(this.commitRegex.test(HTML), 'commitRegex - No match.');
 
     const INTER = HTML.replace(this.buildRegex, (match, p1, p2) => {
       return `${p1}${new Date().toISOString()}${p2}`;

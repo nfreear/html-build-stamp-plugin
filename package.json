@@ -8,7 +8,16 @@
     "type": "git",
     "url": "git+https://github.com/nfreear/html-build-stamp-plugin.git"
   },
-  "keywords": [ "webpack", "webpack-plugin", "html" ],
+  "keywords": [
+    "webpack",
+    "webpack-plugin",
+    "html"
+  ],
   "author": "Nick Freear",
-
+  "devDependencies": {
+    "semistandard": "^17.0.0"
+  },
+  "scripts": {
+    "test": "semistandard --fix"
+  }
 }
