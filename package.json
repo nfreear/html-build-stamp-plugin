@@ -1,9 +1,13 @@
 {
   "name": "html-build-stamp-plugin",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Webpack plugin to add a commit SHA and build timestamp to a HTML file",
   "license": "MIT",
   "main": "./src/HtmlBuildStampPlugin.js",
+  "exports": {
+    ".": "./src/HtmlBuildStampPlugin.js",
+    "./git-info": "./src/gitInfo.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nfreear/html-build-stamp-plugin.git"
@@ -11,6 +15,8 @@
   "keywords": [
     "webpack",
     "webpack-plugin",
+    "git",
+    "commit",
     "html"
   ],
   "author": "Nick Freear",

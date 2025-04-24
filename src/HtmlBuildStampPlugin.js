@@ -7,6 +7,7 @@
 // import { validate } from 'schema-utils';
 const { validate } = require('schema-utils');
 const fs = require('fs').promises;
+const gitInfo = require('./gitInfo.js');
 
 const schema = {
   type: 'object',
@@ -26,7 +27,11 @@ class HtmlBuildStampPlugin {
 
   get commitRegex () { return /(<meta name="wpb.commit" content=")\w*(">)/; }
 
-  get githubCommitSha () {
+  get isoDateTime () { return new Date().toISOString(); }
+
+  get gitCommitSha () { return gitInfo.describe(); }
+
+  get _legacyGithubCommitSha () {
     return process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(0, 8) : '[local]';
   }
 
@@ -62,11 +67,11 @@ class HtmlBuildStampPlugin {
     console.assert(this.commitRegex.test(HTML), 'commitRegex - No match.');
 
     const INTER = HTML.replace(this.buildRegex, (match, p1, p2) => {
-      return `${p1}${new Date().toISOString()}${p2}`;
+      return `${p1}${this.isoDateTime}${p2}`;
     });
 
     const OUTPUT = INTER.replace(this.commitRegex, (match, p1, p2) => {
-      return `${p1}${this.githubCommitSha}${p2}`;
+      return `${p1}${this.gitCommitSha}${p2}`;
     });
 
     await fs.writeFile(outputFilePath, OUTPUT);
