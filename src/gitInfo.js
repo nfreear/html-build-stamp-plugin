@@ -17,8 +17,8 @@ module.exports = {
   // Example output: "0.8.0"
   tag: () => execTrim('git describe --always --tag --abbrev=0'),
 
-  // Example output: "2.0.0-beta-22-g0cbdba7"
-  describe: () => execTrim('git describe --tag --always')
+  // Example output: "0.9.0-0-g383d13a"
+  describe: () => execTrim('git describe --always --tag --long')
 };
 
 function execTrim (command) {
