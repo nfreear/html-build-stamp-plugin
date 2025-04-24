@@ -13,14 +13,14 @@ npm install --save-dev html-build-stamp-plugin
 
 ## Usage
 
-[`webpack.config.js`][config]:
+With [`webpack.config.js`][config]:
 ```js
 const HtmlBuildStampPlugin = require('html-build-stamp-plugin');
 
 module.exports = {
   // …
 
-  plugins:   plugins: [
+  plugins: [
     new HtmlBuildStampPlugin({
       inputFile: path.resolve(__dirname, 'path', 'to', 'input.html'),
       outputFile: path.resolve(__dirname, 'path', 'to', 'output.html')
@@ -29,7 +29,7 @@ module.exports = {
 }
 ```
 
-`input.html`:
+And, `input.html`:
 ```html
 <html>
   <head>
@@ -40,11 +40,11 @@ module.exports = {
 </html>
 ```
 
-Running Webpack results in `output.html`:
+Running Webpack results in something like `output.html`:
 ```html
 <html>
   <head>
-    <meta name="wpb.commit" content="e46bd98">
+    <meta name="wpb.commit" content="0.9.5-0-g9d01af0">
     <meta name="wpb.build" content="2025-03-26T20:03:00.000Z">
     <!-- … -->
   </head>
